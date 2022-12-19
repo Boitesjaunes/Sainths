@@ -1,0 +1,16 @@
+{
+  "name": "sainths",
+  "version": "1.0.0",
+  "description": "\"Sainths\" is a Christmas game involving people organizing parties, Christmas games or other games with a festive atmosphere.",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  },
+  "keywords": [
+    "christmas",
+    "coop",
+    "game"
+  ],
+  "author": "Piotr TheLoloS Sałaga",
+  "license": "ISC"
+}
