@@ -1,6 +1,9 @@
 # 🎄Sainths🎄
 
-"Sainths" is a Christmas game involving people organizing parties, Christmas games or other games with a festive atmosphere.
+"Sainths" is a Christmas-themed computer game that consists of
+having fun together and integrating people creating parties, making Christmas games
+and other games related to the Christmas theme which is based on
+task system.
 
 Users participate in the game by connecting their mobile device and viewer scores on the main device. The game is based on a system of tasks and scoring of users who receive points by taking a given place in the competition.
 
