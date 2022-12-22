@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TabOfPlayers from "./TabOfPlayers";
+import { isMobile } from "react-device-detect";
+import SetGameState from "./SetGameState";
 
 function SendVerifyCode({ socket }) {
   const [codeVerify, setVerifyCode] = useState("");
@@ -7,6 +9,7 @@ function SendVerifyCode({ socket }) {
   const [login, setLogin] = useState("");
   // const [playersCount, setPlayerCount] = useState(0);
   const [pending, setPending] = useState(false);
+  const [upPaddingStatus, setupPaddingStatus] = useState(true)
 
   useEffect(() => {
     socket.on("joinToGame", (data) => {
@@ -15,23 +18,27 @@ function SendVerifyCode({ socket }) {
     });
     socket.on("message", (data) => {
       data.type === "error" && setPending(false);
+      data.type === "error" && setupPaddingStatus(true)
     });
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     socket.emit("joinToGame", { id: codeVerify, login: login });
+    SetGameState("set", "login", login)
   }
 
   return (
     <>
-      <div className="w-screen h-screen flex justify-center items-center relative flex-col">
+      <div className={`w-screen h-screen flex  items-center relative flex-col 
+      ${upPaddingStatus ? isMobile ? " justify-start pt-16" : " justify-center" : isMobile ? " justify-start pt-0" : " justify-center"}`}>
         {!joinToGame ? (
           <form
             className="form flex-col flex items-center"
             onSubmit={(e) => {
               setPending(true);
               handleSubmit(e);
+              setupPaddingStatus(false)
             }}
           >
             <h1 className="text-4xl font-bold text-white">Dołącz do gry</h1>
@@ -62,19 +69,7 @@ function SendVerifyCode({ socket }) {
             )}
           </form>
         ) : (
-          // <p>
-          //   Jesteś w pokoju {status} łacznie z {playersCount}
-          // </p>
-          <>
-            {/* <div className="w-full text-center mb-8 flex justify-center">
-              <h1 className="text-3xl text-white">Poczekalnia: </h1>
-
-              <h1 className="text-5xl text-white ml-8 text-red-400">
-                {joinToGame.id && joinToGame.id}
-              </h1>
-            </div> */}
-            <TabOfPlayers socket={socket} btn={false} />
-          </>
+          <TabOfPlayers socket={socket} btn={false} />
         )}
       </div>
     </>

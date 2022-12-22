@@ -36,7 +36,7 @@ function App() {
       <BackgroundAnimation />
 
       {/* set routes */}
-      <Alert socket={socket} />
+
       <Routes>
         <Route
           path="/main"
@@ -48,6 +48,7 @@ function App() {
           element={<StageUser value={0} socket={socket} gameData={""} />}
         />
       </Routes>
+      <Alert socket={socket} />
       {/* <DownFotterBar /> */}
     </>
   );

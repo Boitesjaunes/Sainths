@@ -3,7 +3,7 @@
 import TabList from "./TabList";
 import { isMobile } from "react-device-detect";
 
-function TabOfPlayers({ socket, btn }) {
+function TabOfPlayers({ socket, btn, main }) {
   // const [Login, setLogin] = useState(login ? login : "anon");
   // const [playerArray, setPlayerArray] = useState(false);
 
@@ -28,7 +28,7 @@ function TabOfPlayers({ socket, btn }) {
           </tr>
         </thead>
         <tbody>
-          <TabList socket={socket} />
+          <TabList socket={socket} user={main ? false : true} />
         </tbody>
       </table>
       <br></br>
@@ -56,7 +56,7 @@ function TabOfPlayers({ socket, btn }) {
           </tr>
         </thead>
         <tbody>
-          <TabList socket={socket} />
+          <TabList socket={socket} user={main ? false : true} />
         </tbody>
       </table>
       {btn ? (

@@ -21,7 +21,7 @@ function WaitRoom({ socket }) {
           {array && array.id}
         </h1>
       </div>
-      <TabOfPlayers socket={socket} btn={"true"} />
+      <TabOfPlayers socket={socket} btn={"true"} main={true} />
     </>
   );
 }

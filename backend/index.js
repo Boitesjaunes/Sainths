@@ -1,3 +1,5 @@
+console.clear()
+
 require("dotenv").config();
 const express = require("express");
 const app = express();
@@ -71,10 +73,11 @@ socketIO.on("connection", (socket) => {
       points: 0,
       onlineStatus: true,
     };
-    if (found.users.length <= maxRoomPlayers) {
-      if (found) {
+    if (found) {
+      if (found.users.length <= maxRoomPlayers) {
         socket.join("Room_" + found.id);
-        console.log(socket.adapter.rooms);
+
+        console.log("pokoje", socket.adapter.rooms);
         if (found.users.find((user) => user.login === data.login)) {
           let a = found.users.find((user) => user.login === data.login);
           if (a.onlineStatus) {
@@ -118,17 +121,18 @@ socketIO.on("connection", (socket) => {
         socket.emit("message", {
           type: "error",
           title: "Błąd",
-          value: "nie ma takiego pokoju",
+          value: "Ten pokój osiągnął juz maksymalną ilość graczy 😥",
         });
       }
       // console.log(rooms);
-      console.table(rooms[0]?.users);
+      // console.table(rooms[0]?.users);
     } else {
       socket.emit("message", {
         type: "error",
         title: "Błąd",
-        value: "Ten pokój osiągnął juz maxymalną ilość graczy 😥",
+        value: "nie ma takiego pokoju",
       });
+
     }
   });
 

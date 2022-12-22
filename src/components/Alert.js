@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { isMobile } from "react-device-detect";
+
+// define properties of specify alerts type
 const types = {
   error: [" bg-red-100 ", " text-red-900 ", " bg-red-600 ", " text-red-400 "],
   succes: [
@@ -22,6 +24,7 @@ function Alert({ type, data, socket }) {
   const [color, setColor] = useState(types.error);
   useEffect(() => {
     socket.on("message", (data) => {
+      // on get message switch get type of message and set state to get  specify alert
       switch (data.type) {
         case "error":
           setColor(types.error);
@@ -39,26 +42,31 @@ function Alert({ type, data, socket }) {
       setAlertData({ type: data.title, data: data.value });
 
       setAlert(true);
+      // set setTimeout for take time to alert exit
       setTimeout(() => {
         setAlert(false);
-      }, 4000);
+      }, 5000);
     });
   });
 
+  //create css objects for framer 
   const notificationVariants = {
     initial: {
       opacity: 0,
-      x: "40vw",
+      x: isMobile ? "100vw" : "40vw",
+      y: 0,
       transition: { duration: 1 },
     },
     animate: {
       opacity: 1,
       x: 0,
-      transition: { duration: 1 },
+      y: 0,
+      transition: { duration: 2 },
     },
     exit: {
       opacity: 0,
-      x: "40vw",
+      x: isMobile ? "100vw" : "40vw",
+      y: 0,
       transition: { duration: 1 },
     },
   };
@@ -69,11 +77,12 @@ function Alert({ type, data, socket }) {
     },
     animate: {
       x: "-100%",
-      transition: { delay: 1, duration: 3, ease: "linear" },
+      transition: { delay: 2, duration: 3, ease: "linear" },
     },
   };
 
   return (
+    // use AnimatePresence component to can use exit method
     <AnimatePresence>
       {alert && (
         <motion.div
@@ -82,7 +91,8 @@ function Alert({ type, data, socket }) {
           animate="animate" // Values to animate to
           exit="exit"
           className={
-            (isMobile ? "w-3/4" : "w-1/4") +
+            // define width of alert on mobile and pc
+            (isMobile ? "w-3/4" : "w-2/4") +
             " rounded  py-6 pt-0 pl-0 pr-0 shadow-md absolute bottom-4 right-4 z-50 overflow-hidden " +
             color[0] +
             color[1]
@@ -103,6 +113,7 @@ function Alert({ type, data, socket }) {
               </svg>
             </div>
             <div>
+              {/* show message data */}
               <p className="font-bold text-lg">
                 {alertData.type && alertData.type}
               </p>
