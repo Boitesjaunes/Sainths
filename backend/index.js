@@ -9,7 +9,7 @@ const cors = require("cors");
 app.use(cors());
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "http://192.168.0.213:3000",
+    origin: "http://87.207.19.177:3000",
   },
 });
 const { v1: uuidv1, v4: uuidv4 } = require("uuid");
@@ -75,9 +75,8 @@ socketIO.on("connection", (socket) => {
     };
     if (found) {
       if (found.users.length <= maxRoomPlayers) {
-        socket.join("Room_" + found.id);
+        // socket.join("Room_" + found.id);
 
-        console.log("pokoje", socket.adapter.rooms);
         if (found.users.find((user) => user.login === data.login)) {
           let a = found.users.find((user) => user.login === data.login);
           if (a.onlineStatus) {
@@ -89,7 +88,7 @@ socketIO.on("connection", (socket) => {
           } else {
             a.socketID = socket.id;
             a.onlineStatus = true;
-            socket.emit("joinToGame", a);
+            socket.emit("joinToGame", found);
             socket.emit("message", {
               type: "succes",
               title: "Udało się! 🥳🥂",
@@ -101,21 +100,31 @@ socketIO.on("connection", (socket) => {
               value: data.login + " Powrócił do gry!",
             });
             socket.in("Room_" + found.id).emit("refreshTab", found);
+            console.log("pokoje", socket.adapter.rooms);
           }
         } else {
-          found.users.push(user);
-          socket.emit("joinToGame", found);
-          socket.emit("message", {
-            type: "succes",
-            title: "Udało się! 🥳🥂",
-            value: "Dołączyłeś do gry!",
-          });
-          socket.in("Room_" + found.id).emit("message", {
-            type: "info",
-            title: "Rodzinka się powieksza! 🎈🎀",
-            value: data.login + " Dołączył do gry!",
-          });
-          socket.in("Room_" + found.id).emit("refreshTab", found);
+          const a = found.users.find((user) => user.ip === socket.handshake.address)
+          if (a) {
+            socket.emit("message", {
+              type: "error",
+              title: "Błąd",
+              value: `Jeżeli próbujesz ponownie dołączyć wpisz poprawny nick: ${a.login}`,
+            });
+          } else {
+            found.users.push(user);
+            socket.emit("joinToGame", found);
+            socket.emit("message", {
+              type: "succes",
+              title: "Udało się! 🥳🥂",
+              value: "Dołączyłeś do gry!",
+            });
+            socket.in("Room_" + found.id).emit("message", {
+              type: "info",
+              title: "Rodzinka się powieksza! 🎈🎀",
+              value: data.login + " Dołączył do gry!",
+            });
+            socket.in("Room_" + found.id).emit("refreshTab", found);
+          }
         }
       } else {
         socket.emit("message", {
@@ -125,7 +134,7 @@ socketIO.on("connection", (socket) => {
         });
       }
       // console.log(rooms);
-      // console.table(rooms[0]?.users);
+      console.table(rooms[0]?.users);
     } else {
       socket.emit("message", {
         type: "error",
@@ -200,10 +209,11 @@ socketIO.on("connection", (socket) => {
       b.onlineStatus = false;
     }
 
-    console.log("🔥: A user disconnected: ", b);
+    // console.log("🔥: A user disconnected" + socket.id);
+    // console.table(a?.users)
   });
 });
 
 http.listen(process.env.PORT, () => {
-  console.log("listening on http://192.168.67.242/");
+  console.log("listening on http://87.207.19.177:3000/");
 });

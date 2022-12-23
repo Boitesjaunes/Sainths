@@ -9,10 +9,11 @@ import Stage from "./components/Stage";
 import StageUser from "./components/StageUser";
 import SetGameState from "./components/SetGameState";
 import Alert from "./components/Alert";
+import ChooseTypePage from "./components/ChooseTypePage";
 // import { themeChange } from "theme-change";
 // import DownFotterBar from "./components/DownFotterBar";
 
-const socket = socketIO.connect("http://192.168.0.213:80");
+const socket = socketIO.connect("http://87.207.19.177:80");
 
 function App() {
   // const [gameStatus, setGameStatus] = useState(false);
@@ -38,13 +39,15 @@ function App() {
       {/* set routes */}
 
       <Routes>
+        <Route exact path="/" element={<ChooseTypePage />} />
         <Route
-          path="/main"
+          path="/local/main"
           exact
           element={<Stage value={0} socket={socket} gameData={""} />}
         />
         <Route
-          path="*"
+          path="/local/user"
+          exact
           element={<StageUser value={0} socket={socket} gameData={""} />}
         />
       </Routes>

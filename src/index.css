@@ -13,8 +13,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: #19223e; */
-  background-color: #9ad3de;
+  background-color: #19223e;
+  /* background-color: #9ad3de; */
   overflow: hidden;
   position: relative;
   /* background-image: url("/public/media/gif3.gif"); */
@@ -23,4 +23,21 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* @font-face {
+  font-family: appleFont;
+  src: url(./components/SF-Pro.woff); 
+}
+*/
+.artboard {
+  background-image: url("https://wmstatic.global.ssl.fastly.net/ml/5050422-f-22266d45-0bc9-483e-8c4c-8ed585b901b7.png");
+  background-size: cover;
+  width: 19rem !important;
+  height: 41rem !important;
+  /* font-family: appleFont !important; */
+}
+
+.badge {
+  letter-spacing: -0.6px;
 }

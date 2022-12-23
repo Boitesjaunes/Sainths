@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { isMobile } from "react-device-detect";
+import SnowFlake from "./snowflake3.svg";
 
 function BackgroundAnimation() {
-  const snowflakesCount = isMobile ? 40 : 80;
+  const snowflakesCount = isMobile ? 20 : 60;
 
   // variables to store snowflakes
   let a = [];
@@ -33,7 +34,7 @@ function BackgroundAnimation() {
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
-
+  const SN = SnowFlake;
   // create snowflakes and giv atribute to they. after that they are pushed to array
   for (let i = 0; i < snowflakesCount; i++) {
     const x = getRandomHeight();
@@ -41,15 +42,15 @@ function BackgroundAnimation() {
     const z = getRandomArbitrary(7, 9);
     const dil = getRandomArbitrary(10, 30);
     a.push(
-      <motion.p
+      <motion.img
+        className="absolute h-4 w-4 cursor-default fill-white"
         key={i}
+        src={SN}
         style={{
-          position: "absolute",
           top: x,
           left: b,
-          cursor: "default",
-          color: "white",
         }}
+
         animate={{
           y: [0, height],
           x: [0, dil, 0, -dil, 0],
@@ -60,18 +61,17 @@ function BackgroundAnimation() {
           repeat: Infinity,
         }}
       >
-        ❄
-      </motion.p>
+
+      </motion.img>
     );
     a2.push(
-      <motion.p
+      <motion.img
+        className="absolute h-4 w-4 cursor-default fill-white"
         key={i}
+        src={SN}
         style={{
-          position: "absolute",
           top: x - height,
           left: b,
-          cursor: "default",
-          color: "white",
         }}
         animate={{
           y: [0, height],
@@ -83,8 +83,8 @@ function BackgroundAnimation() {
           repeat: Infinity,
         }}
       >
-        ❄
-      </motion.p>
+
+      </motion.img>
     );
   }
   return (

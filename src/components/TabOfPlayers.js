@@ -70,6 +70,7 @@ function TabOfPlayers({ socket, btn, main }) {
           Zaczynajmy!
         </button>
       ) : (
+        
         <button className="btn loading">Oczekiwanie</button>
       )}
     </div>

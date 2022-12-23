@@ -72,6 +72,7 @@ function SendVerifyCode({ socket }) {
           <TabOfPlayers socket={socket} btn={false} />
         )}
       </div>
+      <button className="btn bt-primary z-50 absolute bottom-4 left-4" onClick={() => localStorage.clear()}>Zresetuj localStorage</button>
     </>
   );
 }
