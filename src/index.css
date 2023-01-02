@@ -13,8 +13,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #19223e;
+  /* background-color: #19223e; */
+  background-image: url("https://cdn.discordapp.com/attachments/1008571023047798794/1056955126633472090/Piotr_Saaga_3t_christmas_white_light_8K_8e15fef8-427d-4855-8bb7-a4fdc863e129.png");
+  /* background-image: url("https://cdn.discordapp.com/attachments/1008571023047798794/1056945215287595008/Piotr_Saaga_3t_christmas_white_light_8K_653b7d11-7d3c-4788-877b-9afe93911389.png"); */
   /* background-color: #9ad3de; */
+  background-size: cover;
+  background-origin: content-box;
+  background-clip: content-box;
+  background-repeat: round;
   overflow: hidden;
   position: relative;
   /* background-image: url("/public/media/gif3.gif"); */
@@ -40,4 +46,12 @@ code {
 
 .badge {
   letter-spacing: -0.6px;
+}
+
+.tooltip:before {
+  background-color: rgb(29 78 216);
+}
+
+.tooltip:after {
+  border-color: rgb(29 78 216) transparent transparent transparent;
 }

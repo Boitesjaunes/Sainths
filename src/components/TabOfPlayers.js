@@ -2,40 +2,37 @@
 // import { useState, useEffect } from "react";
 import TabList from "./TabList";
 import { isMobile } from "react-device-detect";
+import { useContext } from "react";
+import { GameContext } from "./Context/GameContext";
+import { SocketContext } from "./Context/SocketContext";
 
-function TabOfPlayers({ socket, btn, main }) {
-  // const [Login, setLogin] = useState(login ? login : "anon");
-  // const [playerArray, setPlayerArray] = useState(false);
-
-  // useEffect(() => {
-  //   socket.on("refreshGameTab", (data) => {
-  //     setPlayerArray(data);
-  //   });
-  // });
+function TabOfPlayers({ btn, main }) {
+  const socket = useContext(SocketContext);
+  const { GameData } = useContext(GameContext);
 
   return isMobile ? (
     <div className="w-screen h-screen flex justify-top items-center mb-8  flex-col">
       <table className="table w-screen bg-base-300">
         <thead>
           <tr className="bg-base-300">
-            <th className="text-center pl-0 whitespace-normal">Nazwa</th>
-            <th className="text-center pl-0 whitespace-normal">
-              Punktacja Ogólna
+            <th className="text-center pl-0 whitespace-normal w-[20vw]">Nazwa</th>
+            <th className="text-center pl-0 whitespace-normal w-[20vw]">
+              Ogólna Punktacja
             </th>
-            <th className="text-center pl-0 whitespace-normal">
-              Punktacja Aktualna
+            <th className="text-center pl-0 whitespace-normal w-[20vw]">
+              Aktualna Punktacja
             </th>
           </tr>
         </thead>
         <tbody>
-          <TabList socket={socket} user={main ? false : true} />
+          <TabList user={main ? false : true} />
         </tbody>
       </table>
       <br></br>
       {btn ? (
         <button
           className="btn btn-error mt-12 text-white"
-          onClick={socket.emit("startGame", "startGame")}
+          onClick={socket.emit("startGame", GameData)}
         >
           Zaczynajmy!
         </button>
@@ -46,31 +43,27 @@ function TabOfPlayers({ socket, btn, main }) {
       )}
     </div>
   ) : (
-    <div className={"w-3/5"}>
+    <div className={"w-3/5 flex items-center flex-col"}>
       <table className="table table-compact w-full">
         <thead>
           <tr>
-            <th className="text-center">Nazwa</th>
-            <th className="text-center">Punktacja Ogólna</th>
-            <th className="text-center">Punktacja Aktualna</th>
+            <th className="text-center w-[20vw]">Nazwa</th>
+            <th className="text-center w-[20vw]">Punktacja Ogólna</th>
+            <th className="text-center w-[20vw]">Punktacja Aktualna</th>
           </tr>
         </thead>
         <tbody>
-          <TabList socket={socket} user={main ? false : true} />
+          <TabList user={main ? false : true} />
         </tbody>
       </table>
       {btn ? (
         <button
           className="btn btn-error mt-12 text-white"
-          onClick={(e) => {
-            e.preventDefault();
-            socket.emit("startGame", "startGame");
-          }}
-        >
+          onClick={(e) => { e.preventDefault(); socket.emit("startGame", GameData); }}>
           Zaczynajmy!
         </button>
       ) : (
-        
+
         <button className="btn loading">Oczekiwanie</button>
       )}
     </div>

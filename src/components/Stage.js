@@ -1,12 +1,17 @@
-// import { useState } from "react";
 import CreateGame from "./CreateGame";
 import FirstGame from "./games/Main/Game_1";
+import { useContext } from "react";
+import { GameContext } from "./Context/GameContext";
 
-function Stage({ value, socket, gameData }) {
+function Stage({ gameData }) {
+  const { GameData } = useContext(GameContext);
+  const value = GameData.roomStage ? GameData.roomStage : 0;
+
+  console.log(GameData.roomStage)
   return value === 0 ? (
-    <CreateGame socket={socket} />
+    <CreateGame />
   ) : value === 1 ? (
-    <FirstGame socket={socket} gameData={gameData}></FirstGame>
+    <FirstGame gameData={gameData}></FirstGame>
   ) : value === 2 ? (
     <p>{value}</p>
   ) : value === 3 ? (

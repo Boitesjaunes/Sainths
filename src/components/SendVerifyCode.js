@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import TabOfPlayers from "./TabOfPlayers";
 import { isMobile } from "react-device-detect";
 import SetGameState from "./SetGameState";
+import { useContext } from "react";
+import { SocketContext } from "./Context/SocketContext";
 
-function SendVerifyCode({ socket }) {
+function SendVerifyCode() {
+  const socket = useContext(SocketContext);
   const [codeVerify, setVerifyCode] = useState("");
   const [joinToGame, setJoinToGame] = useState(false);
   const [login, setLogin] = useState("");
@@ -20,7 +23,10 @@ function SendVerifyCode({ socket }) {
       data.type === "error" && setPending(false);
       data.type === "error" && setupPaddingStatus(true)
     });
+
+    // eslint-disable-next-line
   }, []);
+
 
   function handleSubmit(e) {
     e.preventDefault();
